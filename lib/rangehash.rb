@@ -63,6 +63,10 @@ class RangeHash
     nil
   end
 
+  def to_s
+    "#RangeHash<@ranges=[#{@arr.map(&:range).join(",")}]>"
+  end
+
   private
   def search(key, ret_index=false)
     low, high = 0, @arr.size - 1

@@ -8,8 +8,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Mike Lewis"]
   s.email       = ["ft.mikelewis@gmail.com"]
   s.homepage    = ""
-  s.summary     = %q{TODO: Write a gem summary}
-  s.description = %q{TODO: Write a gem description}
+  s.summary     = %q{Given an element, search amongst a collection of ranges efficiently.}
+  s.description = %q{Given an element, search amongst a collection of ranges efficiently.}
 
   s.rubyforge_project = "rangehash"
 
