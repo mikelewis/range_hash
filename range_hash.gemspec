@@ -3,13 +3,13 @@ $:.push File.expand_path("../lib", __FILE__)
 require "rangehash/version"
 
 Gem::Specification.new do |s|
-  s.name        = "rangehash"
+  s.name        = "range_hash"
   s.version     = RangeHash::VERSION
   s.authors     = ["Mike Lewis"]
   s.email       = ["ft.mikelewis@gmail.com"]
   s.homepage    = ""
-  s.summary     = %q{Given an element, search amongst a collection of ranges efficiently.}
-  s.description = %q{Given an element, search amongst a collection of ranges efficiently.}
+  s.summary     = %q{An efficient hash that allows ranges to be keys and searched given an element within those ranges.}
+  s.description = %q{An efficient hash that allows ranges to be keys and searched given an element within those ranges.}
 
   s.rubyforge_project = "rangehash"
 

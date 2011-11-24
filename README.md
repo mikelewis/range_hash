@@ -8,8 +8,7 @@ rangehash
 
 ##Solution
 
-    [sudo] gem install rangehash
-
+    [sudo] gem install range_hash
 
 ##Example
 
@@ -53,7 +52,7 @@ rangehash
 
 ##Wait ... why?
 
-  Because O(log n) is better than O(N). RangeHash keeps an internal sorted array that uses a binary search to find your range. This allows you to achieve (log n) search.
+  Because O(log n) is better than O(N). RangeHash keeps an internal sorted array that uses a binary search to find your range. This allows you to achieve (log n) search. Another option would be to store a dense hash that stores all possible elements within the ranges, however this isn't efficient in terms of memory usage. This is great happy medium.
 
   On-top of that, RangeHash provides some awesome functionality such as callbacks.
 
