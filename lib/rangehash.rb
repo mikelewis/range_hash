@@ -1,6 +1,12 @@
 require "rangehash/version"
 require 'forwardable'
 
+class Range
+  def real_end
+    exclude_end? ? self.end - 1 : self.end
+  end
+end
+
 class RangeHashElement
   extend Forwardable
 
@@ -8,12 +14,9 @@ class RangeHashElement
   attr_accessor :value
 
   def_delegators :@range, :begin
+  def_delegator :@range, :real_end, :end
   def initialize(range, value)
     @range, @value = range, value
-  end
-
-  def end
-    range.exclude_end? ? range.end - 1 : range.end
   end
 end
 
@@ -27,14 +30,11 @@ class RangeHash
   end
 
   def []=(key,value)
-    elem = RangeHashElement.new(key, value)
-    index = search(elem.end, true)
+    index = search(key.real_end, true)
     if index < 0
-      insert_index = -(index + 1)
-      @arr.insert(insert_index, elem)
-
-      # TODO
-      # Edit value if index >= 0
+      elem = RangeHashElement.new(key, value)
+      index = -(index + 1)
+      @arr.insert(index, elem)
     else
       @arr[index].value = value
     end
