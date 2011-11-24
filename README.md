@@ -8,7 +8,7 @@ rangehash
 
 ##Solution
 
-    [sudo] gem install range_hash
+    [install soon]
 
 ##Example
 
