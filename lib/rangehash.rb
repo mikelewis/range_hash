@@ -23,10 +23,23 @@ end
 class RangeHash
   def initialize
     @arr = []
+    @default_callback = nil
   end
 
   def [](key)
-    search(key)
+    result = search(key)
+  end
+
+  def call(key)
+    callback = search(key)
+    if callback
+      callback.call(key)
+    else
+      if Proc === @default_callback
+        @default_callback.call(key)
+      end
+    end
+    nil
   end
 
   def []=(key,value)
@@ -39,6 +52,15 @@ class RangeHash
       @arr[index].value = value
     end
     value
+  end
+
+  def add_callback(range, &callback)
+    if range == :default
+      @default_callback = callback
+    else
+      self[range] = callback
+    end
+    nil
   end
 
   private

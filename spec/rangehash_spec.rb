@@ -41,6 +41,27 @@ describe RangeHash do
       @rh[14].should == 'new'
     end
 
+    it "should accept callbacks and return nil" do
+      result = nil
+      n = @rh.add_callback(100..105) do |elem|
+        result = elem
+      end
+
+      @rh.call(103)
+
+      result.should == 103
+      n.should be_nil
+    end
+
+    it "should accept a default callback" do
+      result = nil
+      @rh.add_callback(:default) do |elem|
+        result = elem
+      end
+      @rh.call(2000)
+      result.should == 2000
+    end
+
   end
 
 end
