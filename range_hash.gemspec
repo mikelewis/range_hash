@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 $:.push File.expand_path("../lib", __FILE__)
-require "rangehash/version"
+require "range_hash/version"
 
 Gem::Specification.new do |s|
   s.name        = "range_hash"
@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.summary     = %q{An efficient hash that allows ranges to be keys and searched given an element within those ranges.}
   s.description = %q{An efficient hash that allows ranges to be keys and searched given an element within those ranges.}
 
-  s.rubyforge_project = "rangehash"
+  s.rubyforge_project = "range_hash"
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
