@@ -60,6 +60,10 @@ class RangeHash
     nil
   end
 
+  def inspect
+    to_s
+  end
+
   def to_s
     "#RangeHash<@ranges=[#{@arr.map(&:range).join(",")}]>"
   end
