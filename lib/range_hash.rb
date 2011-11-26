@@ -1,4 +1,4 @@
-require "rangehash/version"
+require "range_hash/version"
 require 'forwardable'
 
 class Range
