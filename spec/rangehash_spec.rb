@@ -62,23 +62,40 @@ describe RangeHash do
       result.should == 2000
     end
 
+    it "should return nil and not blow up when accessing a callback that does not exist" do
+      lambda { @rh.call(3) }.should_not raise_error
+      @rh.call(3).should be_nil
+    end
+
+    it "should raise an ArgumentError if no block is passed into add_callback" do
+      lambda { @rh.add_callback((1..3)) }.should raise_error(ArgumentError)
+    end
+
+    it "should raise an ArgumentError if a non range or not default is passed into a callback" do
+      lambda { @rh.add_callback(3) }.should raise_error(ArgumentError)
+    end
+
+    it "should raise an ArgumentError if key is not range" do
+      lambda { @rh["yo"] = 5}.should raise_error(ArgumentError)
+    end
+
   end
 
 end
 
 describe RangeHashElement do
   it "should handle inclusive ranges for end" do
-    e = RangeHashElement.new((1..10), 'a')
+    e = RangeHashElement.new(:range => (1..10), :value => 'a')
     e.end.should == 10
   end
 
   it "should handle begin for ranges" do
-    e = RangeHashElement.new((1..10), 'a')
+    e = RangeHashElement.new(:range => (1..10), :value => 'a')
     e.begin.should == 1
   end
 
   it "should handle exclusive ranges end" do
-    e = RangeHashElement.new((1...10), 'a')
+    e = RangeHashElement.new(:range => (1...10), :value => 'a')
     e.end.should == 9
   end
 end

@@ -1,5 +1,5 @@
 
-rangehash
+range_hash
 ========================
 
 ##Problem
@@ -8,13 +8,13 @@ rangehash
 
 ##Solution
 
-    [install soon]
+    [sudo] gem install range_hash
 
 ##Example
 
 ### Simple
 
-    require 'rangehash'
+    require 'range_hash'
     ranges = RangeHash.new
     ranges[1..3] = 'a'
     ranges[10..15] = 'b'
@@ -26,7 +26,7 @@ rangehash
     ranges[100] #=> nil
 
 ### Callbacks
-    require 'rangehash'
+    require 'range_hash'
     ranges = RangeHash.new
     ranges.add_callback(1..13) do |elem|
       puts "#{elem} is between 1 and 3"
@@ -56,3 +56,7 @@ rangehash
 
   On-top of that, RangeHash provides some awesome functionality such as callbacks.
 
+
+##Notes
+
+  Currently does not support ranges that overlap one another.

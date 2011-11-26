@@ -11,12 +11,12 @@ class RangeHashElement
   extend Forwardable
 
   attr_reader :range
-  attr_accessor :value
+  attr_accessor :value, :callback
 
   def_delegators :@range, :begin
   def_delegator :@range, :real_end, :end
-  def initialize(range, value)
-    @range, @value = range, value
+  def initialize(opts={})
+    @range, @value, @callback = opts[:range], opts[:value], opts[:callback]
   end
 end
 
@@ -31,34 +31,31 @@ class RangeHash
   end
 
   def call(key)
-    callback = search(key)
-    if callback
-      callback.call(key)
+    index = search(key, true)
+    if index < 0
+      @default_callback.call(key) if @default_callback.respond_to?(:call)
     else
-      if Proc === @default_callback
-        @default_callback.call(key)
-      end
+      callback = @arr[index].callback
+      callback.call(key) if callback.respond_to?(:call)
     end
     nil
   end
 
-  def []=(key,value)
-    index = search(key.real_end, true)
-    if index < 0
-      elem = RangeHashElement.new(key, value)
-      index = -(index + 1)
-      @arr.insert(index, elem)
-    else
-      @arr[index].value = value
-    end
+  def []=(range,value)
+    raise ArgumentError.new("Key should be a range") unless Range === range
+    edit_or_create(range, :range => range, :value => value)
     value
   end
 
   def add_callback(range, &callback)
+    raise ArgumentError.new("Need to pass a callback in the form of a block") unless block_given?
+    unless Range === range || range == :default
+      raise ArgumentError.new("Argument needs to be a range or :default")
+    end
     if range == :default
       @default_callback = callback
     else
-      self[range] = callback
+      edit_or_create(range, :range => range, :callback => callback)
     end
     nil
   end
@@ -68,6 +65,20 @@ class RangeHash
   end
 
   private
+
+  def edit_or_create(range, element_opts={})
+    index = search(range.real_end, true)
+    if index < 0
+      elem = RangeHashElement.new(element_opts)
+      index = -(index + 1)
+      @arr.insert(index, elem)
+    else
+      element_opts.delete(:range)
+      edit_attr, attr_value = element_opts.to_a.first
+      @arr[index].instance_variable_set(:"@#{edit_attr}", attr_value)
+    end
+  end
+
   def search(key, ret_index=false)
     low, high = 0, @arr.size - 1
     mid = 0
