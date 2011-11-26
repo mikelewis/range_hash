@@ -58,5 +58,5 @@ range_hash
 
 
 ##Notes
-
-  Currently does not support ranges that overlap one another.
+  -Tested against 1.8.7, 1.9.2, 1.9.3
+  -Currently does not support ranges that overlap one another.
